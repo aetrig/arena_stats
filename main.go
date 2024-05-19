@@ -21,8 +21,29 @@ type RiotAcc struct {
 	AccountId string
 }
 
+type Server string
+
+const (
+	brazil              Server = "br1"
+	eu_northeast        Server = "eun1"
+	eu_west             Server = "euw1"
+	japan               Server = "jp1"
+	korea               Server = "kr"
+	latin_america_north Server = "la1"
+	latin_america_south Server = "la2"
+	north_america       Server = "na1"
+	oceania             Server = "oc1"
+	phillippines        Server = "ph2"
+	russia              Server = "ru"
+	singapore           Server = "sg2"
+	thailand            Server = "th2"
+	turkey              Server = "tr1"
+	taiwan              Server = "tw2"
+	vietnam             Server = "vn2"
+)
+
 // Doesn't modify RiotAcc if Status != 200 OK
-func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine string) {
+func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine string, server Server) {
 	//var Acc RiotAcc
 	link := fmt.Sprintf("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/%s/%s?api_key=%s", gameName, tagLine, api_token)
 	resp, err := http.Get(link)
@@ -40,8 +61,8 @@ func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 			log.Fatal(err)
 		}
 	}
-	fmt.Println(resp.Status)
-	link = fmt.Sprintf("https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/%s?api_key=%s", riotAcc.Puuid, api_token)
+	fmt.Println(resp.Status) //! TEMP
+	link = fmt.Sprintf("https://%s.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/%s?api_key=%s", server, riotAcc.Puuid, api_token)
 	resp, err = http.Get(link)
 	if err != nil {
 		log.Fatal(err)
@@ -57,14 +78,16 @@ func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 			log.Fatal(err)
 		}
 	}
-	fmt.Println(resp.Status)
+	fmt.Println(resp.Status) //! TEMP
 }
 
 func main() {
 	godotenv.Load()
 	api_token = os.Getenv("RIOT_TOKEN")
 	var aetrig RiotAcc
-	getRiotAccByGameNameTagLine(&aetrig, "aetrig", "uwu")
-	fmt.Println(aetrig)
-	//fmt.Printf("puuid: %s\ngameName: %s\ntagLine: %s\n", aetrig.Puuid, aetrig.GameName, aetrig.TagLine)
+	var sunny RiotAcc
+	getRiotAccByGameNameTagLine(&aetrig, "aetrig", "uwu", eu_west)
+	getRiotAccByGameNameTagLine(&sunny, "SunnyAsh", "AETI", eu_west)
+	fmt.Println(aetrig) //! TEMP
+	fmt.Println(sunny)  //! TEMP
 }
