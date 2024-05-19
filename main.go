@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	//"reflect"
+	"reflect"
 )
 
 var api_token string
@@ -19,6 +19,15 @@ type RiotAcc struct {
 	Puuid     string
 	Id        string
 	AccountId string
+}
+
+func (Acc RiotAcc) print() {
+	v := reflect.ValueOf(Acc)
+	typeOfThis := v.Type()
+	fmt.Println()
+	for i := 0; i < v.NumField(); i++ {
+		fmt.Printf("%s: %v\n", typeOfThis.Field(i).Name, v.Field(i).Interface())
+	}
 }
 
 type Server string
@@ -60,8 +69,9 @@ func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 		if err != nil {
 			log.Fatal(err)
 		}
+	} else {
+		fmt.Println(resp.Status) //! TEMP
 	}
-	fmt.Println(resp.Status) //! TEMP
 	link = fmt.Sprintf("https://%s.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/%s?api_key=%s", server, riotAcc.Puuid, api_token)
 	resp, err = http.Get(link)
 	if err != nil {
@@ -77,8 +87,9 @@ func getRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 		if err != nil {
 			log.Fatal(err)
 		}
+	} else {
+		fmt.Println(resp.Status) //! TEMP
 	}
-	fmt.Println(resp.Status) //! TEMP
 }
 
 func main() {
@@ -86,8 +97,11 @@ func main() {
 	api_token = os.Getenv("RIOT_TOKEN")
 	var aetrig RiotAcc
 	var sunny RiotAcc
+	var ragna RiotAcc
 	getRiotAccByGameNameTagLine(&aetrig, "aetrig", "uwu", eu_west)
 	getRiotAccByGameNameTagLine(&sunny, "SunnyAsh", "AETI", eu_west)
-	fmt.Println(aetrig) //! TEMP
-	fmt.Println(sunny)  //! TEMP
+	getRiotAccByGameNameTagLine(&ragna, "abs woman", "1312", eu_west)
+	aetrig.print()
+	sunny.print()
+	ragna.print()
 }
