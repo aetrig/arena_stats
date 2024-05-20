@@ -51,7 +51,6 @@ const (
 // Doesn't modify RiotAcc if Status != 200 OK
 func GetRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine string, server Server) {
 	var api_token string = os.Getenv("RIOT_TOKEN")
-	//println(api_token)
 	link := fmt.Sprintf("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/%s/%s?api_key=%s", gameName, tagLine, api_token)
 	resp, err := http.Get(link)
 	if err != nil {
@@ -68,7 +67,7 @@ func GetRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 			log.Fatal(err)
 		}
 	} else {
-		fmt.Println(resp.Status) //! TEMP
+		fmt.Println(resp.Status)
 	}
 	link = fmt.Sprintf("https://%s.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/%s?api_key=%s", server, riotAcc.Puuid, api_token)
 	resp, err = http.Get(link)
@@ -86,6 +85,6 @@ func GetRiotAccByGameNameTagLine(riotAcc *RiotAcc, gameName string, tagLine stri
 			log.Fatal(err)
 		}
 	} else {
-		fmt.Println(resp.Status) //! TEMP
+		fmt.Println(resp.Status)
 	}
 }

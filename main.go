@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/joho/godotenv"
 )
 
@@ -15,4 +17,7 @@ func main() {
 	aetrig.Print()
 	sunny.Print()
 	ragna.Print()
+	var matches []string = GetMatchesByPUUID(aetrig.Puuid)
+	fmt.Println(matches)
+	WriteToFile(matches, "test.txt")
 }
