@@ -11,11 +11,11 @@ import (
 )
 
 type RiotAcc struct {
-	GameName  string
-	TagLine   string
-	Puuid     string
-	Id        string
-	AccountId string
+	GameName  string `json:"gameName"`
+	TagLine   string `json:"tagLine"`
+	Puuid     string `json:"puuid"`
+	Id        string `json:"id"`
+	AccountId string `json:"accountId"`
 }
 
 func (Acc RiotAcc) Print() {
