@@ -44,7 +44,14 @@ func GetMatchesByRiotAcc(riotAcc RiotAcc) []string {
 	puuid := riotAcc.Puuid
 	var matches []string
 	var api_token string = os.Getenv("RIOT_TOKEN")
-	link := fmt.Sprintf("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/%s/ids?startTime=%s&queue=%s&start=0&count=%s&api_key=%s", puuid, April20, ArenaID, n_matches, api_token)
+	link := fmt.Sprintf(
+		"https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/%s/ids?startTime=%s&queue=%s&start=0&count=%s&api_key=%s",
+		puuid,
+		April20,
+		ArenaID,
+		n_matches,
+		api_token,
+	)
 	resp, err := http.Get(link)
 	if err != nil {
 		log.Fatal(err)
@@ -77,7 +84,11 @@ func GetMatchByID(matchID string, acc RiotAcc) _Match {
 	var match _Match
 	var matchJSON _MatchJSON
 	var api_token string = os.Getenv("RIOT_TOKEN")
-	link := fmt.Sprintf("https://europe.api.riotgames.com/lol/match/v5/matches/%s?api_key=%s", matchID, api_token)
+	link := fmt.Sprintf(
+		"https://europe.api.riotgames.com/lol/match/v5/matches/%s?api_key=%s",
+		matchID,
+		api_token,
+	)
 	resp, err := http.Get(link)
 	if err != nil {
 		log.Fatal(err)

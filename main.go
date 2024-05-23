@@ -1,15 +1,17 @@
 package main
 
 import (
-	//"fmt"
-
 	"fmt"
+	"log"
 
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 	var aetrig RiotAcc
 	var sunny RiotAcc
 	var ragna RiotAcc
@@ -22,5 +24,10 @@ func main() {
 	var matches []string = GetMatchesByRiotAcc(aetrig)
 	WriteToFile(matches, "matches.txt")
 	match := GetMatchByID(matches[0], aetrig)
-	fmt.Printf("ID: %s\nChampion: %s\nPlacement: %d\n", match.MatchID, match.Champion, match.Placement)
+	fmt.Printf(
+		"ID: %s\nChampion: %s\nPlacement: %d\n",
+		match.MatchID,
+		match.Champion,
+		match.Placement,
+	)
 }
