@@ -23,7 +23,7 @@ func main() {
 	// ragna.Print()
 	var matches []string = GetMatchesByRiotAcc(aetrig)
 	WriteToFile(matches, "matches.txt")
-	match := GetMatchByID("EUW1_0", aetrig)
+	match := GetMatchByID(matches[0], aetrig)
 	fmt.Printf(
 		"Newest match:\nID: %s\nChampion: %s\nPlacement: %d\n",
 		match.MatchID,

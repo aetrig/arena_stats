@@ -76,7 +76,7 @@ func GetMatchesByRiotAcc(riotAcc RiotAcc) []string {
 
 func WriteToFile(data []string, fileName string) {
 	fileContentBytes, _ := os.ReadFile(fileName)
-	content := strings.Fields(string(fileContentBytes))
+	content := strings.Split(string(fileContentBytes), "\n")
 	//contentString := string(fileContentBytes)
 	//fmt.Print(content)
 	//fmt.Print(contentString)
