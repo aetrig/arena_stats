@@ -70,3 +70,6 @@ $RECYCLE.BIN/
 *.lnk
 
 matches.txt
+matchesOld89.txt
+*.tsv
+*.csv

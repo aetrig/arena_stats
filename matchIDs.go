@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"slices"
+	"sort"
 	"strings"
 	//"reflect"
 )
@@ -73,11 +75,22 @@ func GetMatchesByRiotAcc(riotAcc RiotAcc) []string {
 }
 
 func WriteToFile(data []string, fileName string) {
-	content := strings.Join(data, "\n") + "\n"
-	err := os.WriteFile(fileName, []byte(content), 0666)
-	if err != nil {
-		log.Fatal(err)
+	fileContentBytes, _ := os.ReadFile(fileName)
+	content := strings.Fields(string(fileContentBytes))
+	//contentString := string(fileContentBytes)
+	//fmt.Print(content)
+	//fmt.Print(contentString)
+
+	for _, matchID := range data {
+		if !slices.Contains(content, matchID) {
+			content = append(content, matchID)
+		}
 	}
+
+	sort.Strings(content)
+	slices.Reverse(content)
+	contentString := strings.Join(content, "\n")
+	_ = os.WriteFile(fileName, []byte(contentString), 0666)
 }
 
 func GetMatchByID(matchID string, acc RiotAcc) _Match {
