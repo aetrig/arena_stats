@@ -6,7 +6,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func prepareMatchHistory(name string, tag string, server Server) {
+func updateMatchHistory(name string, tag string, server Server) {
 	var acc RiotAcc
 	GetRiotAccByGameNameTagLine(&acc, name, tag, server)
 	WriteToMatchesFile(GetMatchesByRiotAcc(acc), acc)
@@ -18,5 +18,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	prepareMatchHistory("aetrig", "uwu", Eu_west)
+	updateMatchHistory("aetrig", "uwu", Eu_west)
 }
