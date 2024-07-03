@@ -33,5 +33,5 @@ func main() {
 	// 	match.Placement,
 	// )
 	// WriteToStatsFile(match)
-	StatsMatches(aetrig)
+	CreateMatchHistoryFile(aetrig)
 }

@@ -69,8 +69,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-matches.txt
-matchesOld89.txt
-stats.txt
+*.txt
 *.tsv
 *.csv

@@ -38,7 +38,7 @@ type _MatchJSON struct {
 	Info     _Info     `json:"info"`
 }
 
-func GetMatchByID(matchID string, acc RiotAcc) _Match {
+func getMatchByID(matchID string, acc RiotAcc) _Match {
 	var match _Match
 	var matchJSON _MatchJSON
 	var api_token string = os.Getenv("RIOT_TOKEN")
@@ -76,25 +76,25 @@ func GetMatchByID(matchID string, acc RiotAcc) _Match {
 	return match
 }
 
-func WriteToStatsFile(match _Match) {
-	fileContentBytes, _ := os.ReadFile("stats.txt")
+func writeToMatchHistoryFile(match _Match) {
+	fileContentBytes, _ := os.ReadFile("matchHistory.txt")
 	fileContent := strings.Split(string(fileContentBytes), "\n")
 	matchToAppend := strings.Join([]string{match.MatchID, match.Champion, strconv.Itoa(match.Placement)}, " ")
 	fileContent = append(fileContent, matchToAppend)
 	sort.Strings(fileContent)
 	slices.Reverse(fileContent)
 	contentString := strings.Join(fileContent, "\n")
-	_ = os.WriteFile("stats.txt", []byte(contentString), 0666)
+	_ = os.WriteFile("matchHistory.txt", []byte(contentString), 0666)
 }
 
-func StatsMatches(acc RiotAcc) {
-	fileContentBytes, _ := os.ReadFile("matches.txt")
+func CreateMatchHistoryFile(acc RiotAcc) {
+	fileContentBytes, _ := os.ReadFile("matchIDs.txt")
 	matchIDs := strings.Split(string(fileContentBytes), "\n")
-	fileContentBytes, _ = os.ReadFile("stats.txt")
+	fileContentBytes, _ = os.ReadFile("matchHistory.txt")
 	statsFileContent := string(fileContentBytes)
 	for _, matchID := range matchIDs {
 		if !strings.Contains(statsFileContent, matchID) {
-			WriteToStatsFile(GetMatchByID(matchID, acc))
+			writeToMatchHistoryFile(getMatchByID(matchID, acc))
 		}
 	}
 }

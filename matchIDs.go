@@ -50,7 +50,7 @@ func GetMatchesByRiotAcc(riotAcc RiotAcc) []string {
 }
 
 func WriteToMatchesFile(data []string) {
-	fileContentBytes, _ := os.ReadFile("matches.txt")
+	fileContentBytes, _ := os.ReadFile("matchIDs.txt")
 	content := strings.Split(string(fileContentBytes), "\n")
 	//contentString := string(fileContentBytes)
 	//fmt.Print(content)
@@ -65,5 +65,5 @@ func WriteToMatchesFile(data []string) {
 	sort.Strings(content)
 	slices.Reverse(content)
 	contentString := strings.Join(content, "\n")
-	_ = os.WriteFile("matches.txt", []byte(contentString), 0666)
+	_ = os.WriteFile("matchIDs.txt", []byte(contentString), 0666)
 }
