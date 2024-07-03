@@ -71,5 +71,6 @@ $RECYCLE.BIN/
 
 matches.txt
 matchesOld89.txt
+stats.txt
 *.tsv
 *.csv

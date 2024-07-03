@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -21,13 +20,18 @@ func main() {
 	// aetrig.Print()
 	// sunny.Print()
 	// ragna.Print()
-	var matches []string = GetMatchesByRiotAcc(aetrig)
-	WriteToFile(matches, "matches.txt")
-	match := GetMatchByID(matches[0], aetrig)
-	fmt.Printf(
-		"Newest match:\nID: %s\nChampion: %s\nPlacement: %d\n",
-		match.MatchID,
-		match.Champion,
-		match.Placement,
-	)
+	var last100Matches []string = GetMatchesByRiotAcc(aetrig)
+	WriteToMatchesFile(last100Matches)
+	// start := time.Now()
+	// match := GetMatchByID(last100Matches[2], aetrig)
+	// end := time.Since(start)
+	// fmt.Println(end)
+	// fmt.Printf(
+	// 	"Newest match:\nID: %s\nChampion: %s\nPlacement: %d\n",
+	// 	match.MatchID,
+	// 	match.Champion,
+	// 	match.Placement,
+	// )
+	// WriteToStatsFile(match)
+	StatsMatches(aetrig)
 }
