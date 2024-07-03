@@ -21,7 +21,7 @@ func main() {
 	// sunny.Print()
 	// ragna.Print()
 	var last100Matches []string = GetMatchesByRiotAcc(aetrig)
-	WriteToMatchesFile(last100Matches)
+	WriteToMatchesFile(last100Matches, aetrig)
 	// start := time.Now()
 	// match := GetMatchByID(last100Matches[2], aetrig)
 	// end := time.Since(start)

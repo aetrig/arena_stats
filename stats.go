@@ -76,25 +76,28 @@ func getMatchByID(matchID string, acc RiotAcc) _Match {
 	return match
 }
 
-func writeToMatchHistoryFile(match _Match) {
-	fileContentBytes, _ := os.ReadFile("matchHistory.txt")
+func writeToMatchHistoryFile(match _Match, acc RiotAcc) {
+	var fileName string = "matchHistory_" + acc.GameName + ".txt"
+	fileContentBytes, _ := os.ReadFile(fileName)
 	fileContent := strings.Split(string(fileContentBytes), "\n")
 	matchToAppend := strings.Join([]string{match.MatchID, match.Champion, strconv.Itoa(match.Placement)}, " ")
 	fileContent = append(fileContent, matchToAppend)
 	sort.Strings(fileContent)
 	slices.Reverse(fileContent)
 	contentString := strings.Join(fileContent, "\n")
-	_ = os.WriteFile("matchHistory.txt", []byte(contentString), 0666)
+	_ = os.WriteFile(fileName, []byte(contentString), 0666)
 }
 
 func CreateMatchHistoryFile(acc RiotAcc) {
-	fileContentBytes, _ := os.ReadFile("matchIDs.txt")
+	var fileNameIDs string = "matchIDs_" + acc.GameName + ".txt"
+	var fileNameHistory string = "matchHistory_" + acc.GameName + ".txt"
+	fileContentBytes, _ := os.ReadFile(fileNameIDs)
 	matchIDs := strings.Split(string(fileContentBytes), "\n")
-	fileContentBytes, _ = os.ReadFile("matchHistory.txt")
+	fileContentBytes, _ = os.ReadFile(fileNameHistory)
 	statsFileContent := string(fileContentBytes)
 	for _, matchID := range matchIDs {
 		if !strings.Contains(statsFileContent, matchID) {
-			writeToMatchHistoryFile(getMatchByID(matchID, acc))
+			writeToMatchHistoryFile(getMatchByID(matchID, acc), acc)
 		}
 	}
 }
